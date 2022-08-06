@@ -34,9 +34,9 @@ jobs:
         run: |
           mkdir -p stemroller/win-extra-files/ThirdPartyApps
           unzip -d stemroller/win-extra-files/ThirdPartyApps ffmpeg-win.zip
-          mv $(ls -1 stemroller/win-extra-files/ThirdPartyApps | grep ffmpeg) stemroller/win-extra-files/ThirdPartyApps/ffmpeg
+          mv stemroller/win-extra-files/ThirdPartyApps/$(ls -1 stemroller/win-extra-files/ThirdPartyApps | grep ffmpeg) stemroller/win-extra-files/ThirdPartyApps/ffmpeg
           unzip -d stemroller/win-extra-files/ThirdPartyApps demucs-win.zip 
-          mv $(ls -1 stemroller/win-extra-files/ThirdPartyApps | grep demucs) stemroller/win-extra-files/ThirdPartyApps/demucs
+          mv stemroller/win-extra-files/ThirdPartyApps/$(ls -1 stemroller/win-extra-files/ThirdPartyApps | grep demucs) stemroller/win-extra-files/ThirdPartyApps/demucs
           
       - name: Test
         run: tree

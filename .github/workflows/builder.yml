@@ -37,7 +37,7 @@ jobs:
       - name: Create zip bundle
         run: zip -r stemroller-deps-win.zip stemroller -x "stemroller/mac-extra-files/*"
           
-      - uses: actions/checkout@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: stemroller-deps-win.zip
           path: stemroller-deps-win.zip
@@ -75,7 +75,7 @@ jobs:
         run: zip -r stemroller-deps-mac.zip stemroller -x "stemroller/win-extra-files/*"
           
 
-      - uses: actions/checkout@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: stemroller-deps-mac.zip
           path: stemroller-deps-mac.zip

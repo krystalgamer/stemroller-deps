@@ -1,7 +1,6 @@
 
 name: Deps builder
 
-# Controls when the workflow will run
 on:
   push:
     branches: [ "master" ]
@@ -24,6 +23,7 @@ jobs:
         run: |
           wget -O ffmpeg-win.zip https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip
           wget -O ffmpeg-mac.zip https://evermeet.cx/ffmpeg/ffmpeg-107674-gf0abd07996.zip
+          wget -O ffprobe-mac.zip https://evermeet.cx/ffmpeg/ffprobe-107674-gf0abd07996.zip
           
       - name: Download demucs-freezecx
         run: |
@@ -38,10 +38,28 @@ jobs:
           unzip -d stemroller/win-extra-files/ThirdPartyApps demucs-win.zip 
           mv stemroller/win-extra-files/ThirdPartyApps/$(ls -1 stemroller/win-extra-files/ThirdPartyApps | grep demucs) stemroller/win-extra-files/ThirdPartyApps/demucs
           
-      - name: Test
-        run: tree
           
+      - name: Extract mac deps
+        run: |
+          mkdir -p stemroller/mac-extra-files/ThirdPartyApps/ffmpeg/bin
+          unzip -d stemroller/mac-extra-files/ThirdPartyApps/ffmpeg/bin ffmpeg-mac.zip
+          unzip -d stemroller/mac-extra-files/ThirdPartyApps/ffmpeg/bin ffprobe-mac.zip
+          unzip -d stemroller/mac-extra-files/ThirdPartyApps demucs-mac.zip 
+          mv stemroller/mac-extra-files/ThirdPartyApps/$(ls -1 stemroller/mac-extra-files/ThirdPartyApps | grep demucs) stemroller/mac-extra-files/ThirdPartyApps/demucs
           
-        
-        
-        
+      - name: Create zip bundles
+        run: |
+          zip -r stemroller-deps-win.zip stemroller -x "stemroller/mac-extra-files/*"
+          zip -r stemroller-deps-mac.zip stemroller -x "stemroller/win-extra-files/*"
+          
+      - name: Upload win deps
+        uses: actions/checkout@v2
+        with:
+          name: stemroller-deps-win.zip
+          path: stemroller-deps-win.zip
+          
+      - name: Upload mac deps
+        uses: actions/checkout@v2
+        with:
+          name: stemroller-deps-mac.zip
+          path: stemroller-deps-mac.zip

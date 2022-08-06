@@ -1,0 +1,20 @@
+
+name: Deps builder
+
+# Controls when the workflow will run
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      - name: Run a multi-line script
+        run: ls
+        
